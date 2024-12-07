@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Авторизация</title>
+</head>
+<body>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style3.css') }}">
+    <style>
+        .centered-text {
+            text-align: center;
+            font-size: 24px;
+            color: gray; 
+        }
+        .centered-text2 {
+            text-align: center;
+            font-size: 36px;
+        }
+        .centered-text3 {
+            text-align: center;
+            font-size: 30px;
+        }
+    </style>
+    <label class="centered-text">Шамитова А., Аэ-21-22</label>
+    <h2 class="centered-text2">Добро пожаловать на сайт поликлиники 111!</h2><br>
+
+    <form method="POST" action="/" class="form">
+        <div>
+            <label for="login" class="label">Имя пользователя:</label>
+            <input type="text" id="login" name="login" class="login-input" required>
+        </div>
+        <div>
+            <br><label for="password" class="label">Пароль:</label>
+            <input type="password" id="password" name="password" class="password-input" required>
+        </div>
+        <br><button type="submit" class="button">Войти</button>
+    </form>
+</body>
+</html>

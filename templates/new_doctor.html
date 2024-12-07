@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Добавление врача</title>
+</head>
+<body>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style3.css') }}">
+    <style>
+        .centered-text {
+            text-align: center;
+            font-size: 24px;
+            color: gray; 
+        }
+    </style>
+    <label class="centered-text">Шамитова А., Аэ-21-22</label>
+
+    <h2>Добавление врача</h2>
+    <form action="/doctors/new" method="post">
+
+        <label for="fio_doctor">ФИО:</label>
+        <input type="text" id="fio_doctor" name="fio_doctor" required maxlength="255" pattern="^[A-Za-zА-Яа-я\s]+$" title="ФИО должно содержать только буквы и пробелы."><br><br>
+        
+        <label for="speciality">Специальность:</label>
+        <input type="text" id="speciality" name="speciality" required maxlength="255" pattern="^[A-Za-zА-Яа-я\s]+$" title="Специальность должно содержать только буквы и пробелы."><br><br>
+
+        <label for="office">Номер кабинета:</label>
+        <input type="text" id="office" name="office" required maxlength="50" pattern="^\d+$" title="Номер кабинета должен быть числом."><br><br>
+
+        <button type="submit">Добавить врача</button>
+    </form>
+    <br>
+    <a href="/doctors"><button>Отмена</button></a>
+</body>
+</html>

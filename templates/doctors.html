@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Врачи</title>
+</head>
+<body>
+
+    {% extends 'base.html' %}
+
+    {% block content %}
+    <div class="doctorsDiv">
+        {% if user == 'admin' %}
+            <a href="/doctors/new">
+                <button style="margin-left: 220px;">Добавить врача</button>
+            </a>
+        {% endif %}
+        <table>
+            <thead>
+                <tr>
+                    <!-- Передать заголовки без ИД -->
+                    {% for head in headers_doctor %}
+                        {% if (user != 'admin' and head != 'Удаление врача') or user == 'admin' %}
+                            <th>{{ head }}</th>
+                        {% endif %}
+                    {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for doctor in doctors %}
+                <tr>
+                    {% for value in doctor.values() %}
+                    <!-- Передать записи без id -->
+                    <td>{{ value }}</td>
+                    {% endfor %}
+                    {% if user == 'admin' %}
+                    <td>
+                        <a href="/doctors/delete/{{ doctor['office'] }}">
+                            <button>Удалить</button>
+                        </a>
+                    </td>
+                    {% endif %}
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {{ super() }}
+    {% endblock %}
+</body>
+</html>

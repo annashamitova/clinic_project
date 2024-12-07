@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Пациенты</title>
+</head>
+<body>
+    {% extends 'base.html' %}
+    {% block content %}
+    <div class="patientsDiv">
+        {% if user == 'admin' %}
+            <a href="/patients/new">
+                <button style="margin-left: 220px;">Добавить пациента</button>
+            </a>
+        {% endif %}
+        <table>
+            <thead>
+                <tr>
+                    <!-- Передать заголовки без ИД -->
+                    {% for head in headers_patient %}
+                        {% if (user != 'admin' and head != 'Удаление пациента') or user == 'admin' %}
+                            <th>{{ head }}</th>
+                        {% endif %}
+                    {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for patient in patients %}
+                <tr>
+                    {% for value in patient.values() %}
+                    <!-- Передать записи без id -->
+                    <td>{{ value }}</td>
+                    {% endfor %}
+                    {% if user == 'admin' %}
+                    <td>
+                        <a href="/patients/delete/{{ patient['polis'] }}">
+                            <button>Удалить</button>
+                        </a>
+                    </td>
+                    {% endif %}
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {{ super() }}
+    {% endblock %}
+</body>
+</html>

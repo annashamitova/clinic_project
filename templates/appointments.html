@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Записи</title>
+</head>
+<body>
+    <style>
+        .checkbox-container {
+            display: flex;
+            align-items: center;
+        }
+        .checkbox-label {
+            margin-left: 5px;
+        }
+    </style>
+    {% extends 'base.html' %}
+
+    {% block content %}
+    <div class="appointmentsDiv">
+        <table>
+            <thead>
+                <tr>
+                    {% for head in headers_appointments %}
+                        {% if (user != 'admin' and head != 'Удаление врача') or user == 'admin' %}
+                            <th>{{ head }}</th>
+                        {% endif %}
+                    {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for a in appointments %}
+                <tr>
+                    {% for value in a.values() %}
+                    <td>{{ value }}</td>
+                    {% endfor %}
+                    <td>
+                        <form action="/appointments/add_service_to_appointment/{{ a['id_appointment'] }}/{{ a['office'] }}" method="get">
+                            <button type="submit">Добавить</button>
+                        </form>
+                    </td>
+                    <td>
+                        <form action="/appointments/delete/{{ a['id_appointment'] }}" method="post">
+                            <button type="submit">Удалить</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+
+
+    <form action="{{ url_for('insert_appointments') }}" method="post" class="appointment-form">
+        <h2>Добавить запись на прием</h2>
+        <label for="p_id">Пациент:</label>
+        {% if user == 'admin' %}
+            <!-- <input type="text" id="polis" name="p_id" required><br> -->
+            <select name="p_id" required title="Выберите пациента">
+                <option value="">Выберите пациента</option>
+                {% for patient in patients %}
+                    <option value="{{ patient['polis'] }}">{{ patient['fio'] }}</option>
+                {% endfor %}
+            </select><br><br>
+        {% else %}
+            <input type="text" id="polis" name="p_id" value="{{ user['polis'] }}" readonly><br>
+        {% endif %}
+
+        <label for="date">Дата приема:</label>
+        <input type="date" id="date" name="day" required><br><br>
+
+        <label for="my_time">Время приема:</label>
+        <input type="time" id="time" name="my_time" required><br><br>
+
+        <label for="d_id">Врач:</label>
+        <select name="d_id" id="doctors_select" required title="Выберите врача">
+            <option value="">Выберите врача</option>
+            {% for doctor in doctors %}
+                <option value="{{ doctor['office'] }}">{{ doctor['fio'] }}</option>
+            {% endfor %}
+        </select><br><br>
+
+
+        <!-- <label id="name_services">Услуга:</label><br>
+        <div>
+            {% for service in services %}
+                <div class="checkbox-container">
+                    <input type="checkbox" id="service_{{ service['id'] }}" name="name_service" value="{{ service['id'] }}">
+                    <label class="checkbox-label" for="service_{{ service['id'] }}" >{{ service['name'] }}</label>
+                    
+                </div>
+            {% endfor %}
+        </div><br> -->
+        
+        <button type="submit">Добавить запись</button>
+    </form>
+
+    {{ super() }}
+    {% endblock %}
+</body>
+</html>

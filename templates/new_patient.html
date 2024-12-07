@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Добавление пациента</title>
+</head>
+<body>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style3.css') }}">
+    <style>
+        .centered-text {
+            text-align: center;
+            font-size: 24px;
+            color: gray; 
+        }
+    </style>
+    <label class="centered-text">Шамитова А., Аэ-21-22</label>
+
+    <h2>Добавление пациента</h2>
+    <form action="/patients/new" method="post">
+        <label for="polis">Полис:</label>
+        <input type="text" id="polis" name="polis" required maxlength="50" pattern="^P\d{4}$" title="Полис должен быть формата РХХХХ."><br><br>
+
+        <label for="fio_patient">ФИО:</label>
+        <input type="text" id="fio_patient" name="fio_patient" required maxlength="255" pattern="^[A-Za-zА-Яа-я\s]+$" title="ФИО должно содержать только буквы и пробелы."><br><br>
+
+        <label for="bd_patient">Дата рождения:</label>
+        <input type="date" id="bd_patient" name="bd_patient" min="1924-01-01" max="2024-12-04" required><br><br>
+
+        <label for="passport">Паспорт:</label>
+        <input type="text" id="passport" name="passport" required maxlength="50" pattern="^\d{4} \d{6}$" title="Паспорт должен быть формата 'ХХХХ ХХХХХХ'."><br><br>
+
+        <label for="phone_patient">Телефон:</label>
+        <input type="text" id="phone_patient" name="phone_patient" required maxlength="20" pattern="^\+79\d{9}$" title="Телефон должен быть формата +79ХХХХХХХХХ."><br><br>
+
+        <label for="email_patient">Email:</label>
+        <input type="email" id="email_patient" name="email_patient" required maxlength="100" title="Введите корректный email адрес."><br><br>
+
+        <button type="submit">Добавить пациента</button>
+    </form>
+    <br>
+    <a href="/patients"><button>Отмена</button></a>
+</body>
+</html>

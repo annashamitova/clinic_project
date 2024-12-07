@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Услуги</title>
+</head>
+<body>
+    {% extends 'base.html' %}
+    {% block content %}
+    <div class="servicesDiv">
+        {% if user == 'admin' %}
+            <a href="/services/new">
+                <button style="margin-left: 220px;">Добавить услугу</button>
+            </a>
+        {% endif %}
+        <table>
+            <thead>
+                <tr>
+                    {% for head in headers_service %}
+                        {% if (user != 'admin' and head != 'Удаление услуги') or user == 'admin' or (user != 'admin' and head != 'ID') %}
+                            <th>{{ head }}</th>
+                        {% endif %}
+                    {% endfor %}
+                    {% if user == 'admin' %}
+                        <th>Удаление услуги</th>
+                        <th colspan="2">Изменение цены услуги</th>
+                    {% endif %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for service in services %}
+                <tr>
+                    {% for value in service.values() %}
+                    <td>{{ value }}</td>
+                    {% endfor %}
+                    {% if user == 'admin' %}
+                        <td>
+                            <a href="/services/delete/{{ service['id'] }}">
+                                <button>Удалить</button>
+                            </a>
+                        </td>
+                        <form action="/services/update/{{ service['id'] }}" method="get">
+                            <td><input type="text" name="price" pattern="^\d+(\.\d+)?$"></button></td>
+                            <td><button type="submit">Подтвердить</button></td>
+                        </form>
+                    {% endif %}
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <br>
+    <div class="total-cost">
+        Общая стоимость всех услуг: {{ total_cost }}
+    </div>
+    <br>
+    {{ super() }}
+    {% endblock %}
+</body>
+</html>

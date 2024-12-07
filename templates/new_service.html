@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Добавление услуги</title>
+</head>
+<body>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style3.css') }}">
+    <style>
+        .centered-text {
+            text-align: center;
+            font-size: 24px;
+            color: gray; 
+        }
+    </style>
+    <label class="centered-text">Шамитова А., Аэ-21-22</label>
+
+    <h2>Добавление услуги</h2>
+    <form action="/services/new" method="post">
+        <label for="ID">ID:</label>
+        <input type="text" id="id_service" name="id_service" required maxlength="50" pattern="^\d+$" title="ID может быть только числом."><br><br>
+
+        <label for="name_service">Название услуги:</label>
+        <input type="text" id="name_service" name="name_service" required maxlength="255" pattern="^[A-Za-zА-Яа-я\s]+$" title="Название должно содержать только буквы и пробелы."><br><br>
+
+        <label for="d_id">Врач:</label>
+        <select name="d_id" required title="Выберите врача">
+            <option value="">Выберите врача</option>
+            {% for doctor in doctors %}
+                <option value="{{ doctor['office'] }}">{{ doctor['fio'] }}</option>
+            {% endfor %}
+        </select><br><br>
+
+        <label for="price">Цена:</label>
+        <input type="text" id="price" name="price" required maxlength="50" pattern="^\d+$" title="Цена должна быть непустой, неотрицаттельной и содержать только цифры."><br><br>
+
+        <button type="submit">Добавить услугу</button>
+    </form>
+    <br>
+    <a href="/services"><button>Отмена</button></a>
+</body>
+</html>

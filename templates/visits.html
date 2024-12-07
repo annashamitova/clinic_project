@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Суммаризация посещений</title>
+</head>
+<body>
+
+    {% extends 'base.html' %}
+
+    {% block content %}
+    <div class="visitsDiv">
+
+        <table>
+            <thead>
+                <tr>
+                    <!-- Заголовки таблицы, полученные из контроллера -->
+                    {% for head in headers_visits %}
+                    <th>{{ head }}</th>
+                    {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Перебор всех визитов -->
+                {% for visit in visits %}
+                <tr>
+                    {% for value in visit.values() %}
+                    <td>{{ value }}</td>
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    {{ super() }}
+    {% endblock %}
+</body>
+</html>

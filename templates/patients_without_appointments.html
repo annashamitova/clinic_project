@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Пациенты без записей</title>
+</head>
+<body>
+    {% extends 'base.html' %}
+    {% block content %}
+    <div>
+        <table>
+            <thead>
+                <tr>
+                    <!-- Передать заголовки без ИД -->
+                    {% for head in headers_patient %}
+                            <th>{{ head }}</th>
+                    {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for patient in patients %}
+                <tr>
+                    {% for value in patient.values() %}
+                    <!-- Передать записи без id -->
+                    <td>{{ value }}</td>
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {{ super() }}
+    {% endblock %}
+</body>
+</html>

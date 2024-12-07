@@ -1,0 +1,80 @@
+<html>
+    <head>
+        <!-- <link rel="icon" href="static/head.ico"> -->
+        <link rel="icon" type="image/png" href="{{ url_for('static', filename='mmm.png') }}">
+    </head>
+    <body>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/style3.css') }}">
+        <style>
+            .centered-text {
+                text-align: center;
+                font-size: 24px;
+                color: gray; 
+            }
+        </style>
+        <label class="centered-text">Шамитова А., Аэ-21-22</label>
+
+
+        <div class="buttonsDiv">
+            {% if user == 'admin' %}
+                <a href="{{ url_for('get_all_visits') }}">
+                    <button>Суммаризация посещений</button>
+                </a>
+            {% endif %}
+            <a href="{{ url_for('get_list_appointments') }}">
+                <button>Записи</button>
+            </a>
+            {% if user == 'admin' %} 
+                <a href="{{ url_for('get_patients_without_appointments_view') }}">
+                    <button>Пациенты без записей</button>
+                </a>
+            {% endif %}
+            {% if user == 'admin' %}
+                <a href="{{ url_for('get_list_patiens') }}">
+                    <button>Пациенты</button>
+                </a>
+            {% endif %}
+            <a href="{{ url_for('get_list_doctors') }}">
+                <button>Врачи</button>
+            </a>
+            <a href="{{ url_for('get_list_services') }}">
+                <button>Услуги</button>
+            </a>
+            <a href="{{ url_for('logout') }}">
+                <button type="button">Выйти</button>
+            </a>
+            
+        </div>
+
+        {% block content %}
+        {% endblock %}
+
+        {% block schedule %}
+        <div id="scheduleDiv" class='schedule'>
+            <table>
+                <thead>
+                    <tr>
+                        {% for head in headers_schedule %}
+                        <th>{{ head }}</th>
+                        {% endfor %}
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for day in schedule %}
+                    <tr>
+                        {% for value in day.values() %}
+                        <td>{{ value }}</td>
+                        {% endfor %}
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <div class="contact-info">
+                <p>{{contact_headers_schedule[0]}}:     {{contact_schedule[0]}}</p>
+                <p>{{contact_headers_schedule[1]}}:     {{contact_schedule[1]}}</p>
+                <p>{{contact_headers_schedule[2]}}:     {{contact_schedule[2]}}</p>
+            </div>
+        </div>
+        {% endblock %}
+    </body>
+</html>

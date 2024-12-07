@@ -1,0 +1,38 @@
+<html>
+<head>
+    <title>Добавление услуги</title>
+</head>
+<body>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style3.css') }}">
+    <form action="{{ url_for('insert_appointment_service_route') }}" method="post" class="appointment-form">
+
+        <style>
+            .center {
+                display: flex;
+                justify-content: center;
+                height: 100vh;
+            }
+        </style>
+
+        <h2>Информация о записи пациента {{ a['patient'] }}</h2><br><br>
+        <label>Врач: {{ a['doctor'] }}</label><br><br>
+        <label>Дата приема: {{ a['date'] }}</label><br><br>
+        <label>Время приема: {{ a['time'] }}</label><br><br>
+        <input type="text" name="id_appointment" value="{{ a['id_appointment'] }}" hidden readonly>
+
+        <label for="id_service">Услуга:</label>
+        <select name="id_service" required title="Выберите услугу">
+            <option value="">Выберите услугу</option>
+            {% for service in services %}
+                <option value="{{ service['id'] }}">{{ service['name'] }}</option>
+            {% endfor %}
+        </select><br><br>
+        
+        <button type="submit">Добавить услугу</button>
+    </form>
+    <br>
+    <div class="center">
+        <a href="/appointments"><button>Отмена</button></a>
+    </div>
+</body>
+</html>
